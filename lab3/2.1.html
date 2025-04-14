@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+  <title>新闻资讯网页</title>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 2vw;
+    }
+
+   .news-container {
+      width: 100%;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 2vw;
+      box-sizing: border-box;
+    }
+
+   .header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 2vw;
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 1vw;
+    }
+
+   .channel,
+   .category,
+   .title {
+      margin-right: 2vw;
+      font-size: clamp(16px, 2vw, 20px);
+      font-weight: 600;
+      color: #333;
+    }
+
+   .main-content {
+      display: flex;
+      gap: 2vw;
+      flex-wrap: wrap;
+    }
+
+   .left-section {
+      flex: 2;
+      min-width: 300px;
+    }
+
+   .right-section {
+      flex: 1;
+      min-width: 200px;
+    }
+
+   .news-item,
+   .hot-news {
+      margin-bottom: 2vw;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      /* 移除 transition 属性 */
+    }
+
+   /* 移除 .news-item:hover 和 .hot-news:hover 中的 transform 样式 */
+   .news-item:hover,
+   .hot-news:hover {
+      /* 无动画效果 */
+    }
+
+   .news-item h4 {
+      font-size: clamp(14px, 1.8vw, 18px);
+      font-weight: 600;
+      margin: 1.5vw;
+      color: #333;
+    }
+
+   .news-item .image-container {
+      display: flex;
+      gap: 1vw;
+      padding: 0 1.5vw;
+    }
+
+   .news-item img {
+      width: 50%;
+      height: auto;
+      object-fit: cover;
+    }
+
+   .author {
+      font-size: clamp(10px, 1.2vw, 14px);
+      font-style: italic;
+      color: #666;
+      margin: 1.5vw;
+    }
+
+   .hot-news a {
+      display: block;
+      font-size: clamp(12px, 1.6vw, 16px);
+      font-weight: 600;
+      margin: 1.5vw;
+      color: #333;
+      text-decoration: none;
+    }
+
+   .hot-news a:hover {
+      text-decoration: underline;
+    }
+
+   .hot-news img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="news-container">
+    <div class="header">
+      <span class="channel">频道</span>
+      <span class="category">科技</span>
+      <span class="title">太空探测</span>
+    </div>
+    <div class="main-content">
+      <div class="left-section">
+        <div class="news-item">
+          <h4>飞行了200多亿公里的旅行者1号，为何不会撞上太空中的小行星</h4>
+          <div class="image-container">
+            <img src="newsphoto1.jpg" alt="新闻图片1">
+            <img src="newsphoto2.jpg" alt="新闻图片2">
+          </div>
+          <p class="author">作者：[作者名]</p>
+        </div>
+        <div class="news-item">
+          <h4>欧洲探测器从44亿公里外传回多幅照片</h4>
+          <div class="image-container">
+            <img src="newsphoto3.jpg" alt="新闻图片3">
+            <img src="newsphoto4.jpg" alt="新闻图片4">
+          </div>
+          <p class="author">作者：[作者名]</p>
+        </div>
+        <div class="news-item">
+          <h4>为什么太空没有氧气，陨石却能够燃烧</h4>
+          <div class="image-container">
+            <img src="newsphoto5.jpg" alt="新闻图片5">
+            <img src="newsphoto6.jpg" alt="新闻图片6">
+          </div>
+          <p class="author">作者：[作者名]</p>
+        </div>
+      </div>
+      <div class="right-section">
+        <div class="hot-news">
+          <a href="#">研究表明：人类的自然寿命为120岁</a>
+          <img src="photo1.jpg" alt="热点新闻图片1">
+        </div>
+        <div class="hot-news">
+          <a href="#">日偏食将于下周降临，一个瞬间，错过一场，立马不再来</a>
+          <img src="photo2.jpg" alt="热点新闻图片2">
+        </div>
+        <div class="hot-news">
+          <a href="#">俗语“七月十二用一用，四季无收成”，一定要重视起来</a>
+          <img src="photo3.jpg" alt="热点新闻图片3">
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>    
