@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>个人简历</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      background-image: url('background.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid black;
+    }
+
+    th {
+      background-image: url('th_background.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    th img {
+      width: 100%;
+      height: auto;
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <table>
+    <caption>个人简历</caption>
+    <tr>
+      <th>姓名</th>
+      <td><input type="text" placeholder="请输入姓名" style="width: 100%;" id="name"></td>
+      <th>性别</th>
+      <td><select style="width: 100%;" id="gender">
+          <option value="男">男</option>
+          <option value="女">女</option>
+        </select></td>
+      <th>年龄</th>
+      <td><input type="number" placeholder="请输入年龄" style="width: 100%;" id="age"></td>
+      <th rowspan="3">
+        <input type="file" accept="image/*" style="width: 100%;" id="photoInput">
+        <img id="photoPreview" style="width: 100%; height: auto; margin-top: 10px; display: none;">
+      </th>
+    </tr>
+    <tr>
+      <th>&#x1F3E0; 籍贯</th>
+      <td><input type="text" placeholder="请输入籍贯" style="width: 100%;" id="hometown"></td>
+      <th>&#x1F4DE; 联系电话</th>
+      <td><input type="tel" placeholder="请输入联系电话" style="width: 100%;" id="phone"></td>
+      <th>&#x1F4E7; 电子邮箱</th>
+      <td><input type="email" placeholder="请输入电子邮箱" style="width: 100%;" id="email"></td>
+    </tr>
+    <tr>
+      <th>&#x1F393; 学历</th>
+      <td><select style="width: 100%;" id="education">
+          <option value="高中">高中</option>
+          <option value="大专">大专</option>
+          <option value="本科">本科</option>
+          <option value="硕士">硕士</option>
+          <option value="博士">博士</option>
+        </select></td>
+      <th>&#x2695; 健康状况</th>
+      <td><select style="width: 100%;" id="health">
+          <option value="良好">良好</option>
+          <option value="一般">一般</option>
+          <option value="较差">较差</option>
+        </select></td>
+      <th>&#x1F491; 婚姻状况</th>
+      <td><select style="width: 100%;" id="maritalStatus">
+          <option value="未婚">未婚</option>
+          <option value="已婚">已婚</option>
+          <option value="离异">离异</option>
+        </select></td>
+    </tr>
+    <tr>
+      <th>求职意向</th>
+      <td colspan="1">
+        <input list="job-intentions" placeholder="请选择求职意向" style="width: 100%;" id="jobIntention">
+        <datalist id="job-intentions">
+          <option value="前端开发工程师">
+          <option value="后端开发工程师">
+          <option value="测试工程师">
+        </datalist>
+      </td>
+      <th>专业</th>
+      <td colspan="2"><select style="width: 100%;" id="major">
+          <option value="软件工程">软件工程</option>
+          <option value="计算机科学与技术">计算机科学与技术</option>
+          <option value="网络工程">网络工程</option>
+        </select></td>
+      <th>毕业院校</th>
+      <td>
+        <select id="province" style="width: 30%;">
+          <option value="山东省">山东省</option>
+          <option value="北京市">北京市</option>
+          
+        </select>
+        <select id="city" style="width: 30%;">
+          <option value="烟台市">烟台市</option>
+          <option value="北京市">北京市</option>
+          
+        </select>
+        <select id="school" style="width: 30%;">
+          <option value="鲁东大学">鲁东大学</option>
+          <option value="北京大学">北京大学</option>
+          
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <th>技能证书</th>
+      <td colspan="6"><input type="checkbox" name="skillCert[]" id="cert1"> 互联网+<input type="checkbox" name="skillCert[]" id="cert2"> 蓝桥杯 <input type="checkbox" name="skillCert[]" id="cert3"> 挑战者杯</td>
+    </tr>
+    <tr>
+      <th>个人特长与爱好</th>
+      <td colspan="6"><input type="checkbox" name="hobby[]" id="hobby1"> 篮球 <input type="checkbox" name="hobby[]" id="hobby2"> 阅读 <input type="checkbox" name="hobby[]" id="hobby3"> 编程</td>
+    </tr>
+    <tr>
+      <th>项目经历</th>
+      <td colspan="6"><textarea style="width: 100%; height: 100px; resize: none;" placeholder="请输入项目经历" id="projectExperience"></textarea></td>
+    </tr>
+    <tr>
+      <th>自我评价</th>
+      <td colspan="6"><textarea style="width: 100%; height: 100px; resize: none;" placeholder="请输入自我评价" id="selfEvaluation"></textarea></td>
+    </tr>
+    <tr>
+      <td colspan="6" style="text-align: center;">
+        <input type="submit" value="提交">
+        <input type="button" value="清除" id="clearButton">
+      </td>
+    </tr>
+  </table>
+  <script>
+    const photoInput = document.getElementById('photoInput');
+    const photoPreview = document.getElementById('photoPreview');
+
+    photoInput.addEventListener('change', function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          photoPreview.src = e.target.result;
+          photoPreview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        photoPreview.style.display = 'none';
+      }
+    });
+
+    const clearButton = document.getElementById('clearButton');
+    clearButton.addEventListener('click', function () {
+      document.getElementById('name').value = '';
+      document.getElementById('gender').selectedIndex = 0;
+      document.getElementById('age').value = '';
+      document.getElementById('hometown').value = '';
+      document.getElementById('phone').value = '';
+      document.getElementById('email').value = '';
+      document.getElementById('education').selectedIndex = 0;
+      document.getElementById('health').selectedIndex = 0;
+      document.getElementById('maritalStatus').selectedIndex = 0;
+      document.getElementById('jobIntention').value = '';
+      document.getElementById('major').selectedIndex = 0;
+      document.getElementById('province').selectedIndex = 0;
+      document.getElementById('city').selectedIndex = 0;
+      document.getElementById('school').selectedIndex = 0;
+      document.getElementById('cert1').checked = false;
+      document.getElementById('cert2').checked = false;
+      document.getElementById('cert3').checked = false;
+      document.getElementById('hobby1').checked = false;
+      document.getElementById('hobby2').checked = false;
+      document.getElementById('hobby3').checked = false;
+      document.getElementById('projectExperience').value = '';
+      document.getElementById('selfEvaluation').value = '';
+    });
+  </script>
+</body>
+
+</html>
+        
