@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>个人简历</title>
+  <style>
+    
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-image: url('background.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+   
+    .resume-container {
+      width: 80%;
+      max-width: 800px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: relative; 
+      border: 1px solid #ccc; 
+      padding: 20px;
+      border-radius: 10px;
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+
+   
+    .form-group {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #eee; 
+      padding-bottom: 10px;
+    }
+
+    
+    .form-group:last-child {
+      border-bottom: none;
+    }
+
+   
+    .form-label {
+      width: 30%;
+      background-image: url('th_background.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      text-align: center;
+      padding: 5px;
+    }
+
+    
+    .form-input {
+      width: 70%;
+    }
+
+   
+   .photo-upload {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 20%;
+    }
+
+    
+   .photo-preview {
+      width: 100%; 
+      height: auto; 
+      margin-top: 10px;
+    }
+
+    
+    .checkbox-group {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 10px;
+      border-bottom: 1px solid #eee; 
+      padding-bottom: 10px;
+    }
+
+    
+    .textarea {
+      width: 100%;
+      border-bottom: 1px solid #eee; 
+      padding-bottom: 10px;
+    }
+
+    
+    .button-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+   
+    .form-label,
+    .form-input input,
+    .form-input select,
+    .checkbox-group input,
+    .textarea textarea {
+      transition: all 0.3s ease;
+    }
+
+    .form-label:hover,
+    .form-input input:hover,
+    .form-input select:hover,
+    .checkbox-group input:hover,
+    .textarea textarea:hover {
+      transform: translate(2px, -2px);
+      rotate: 2deg;
+    }
+
+    
+    #projectExperience,
+    #selfEvaluation {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  
+  <div class="resume-container">
+    
+    <h2>个人简历</h2>
+    <div class="photo-upload">
+      <img id="photoPreview" class="photo-preview" src="personal_photo.jpg">
+    </div>
+    <div class="form-group">
+      <div class="form-label">&#x1F464; 姓名</div>
+      <div class="form-input"><input type="text" value="王宪斌" id="name"></div>
+    </div>
+    <div class="form-group">
+      <div class="form-label">&#x2642; 性别</div>
+      <div class="form-input">
+        <select id="gender">
+          <option value="男" selected>男</option>
+          <option value="女">女</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-label">&#x1F975; 年龄</div>
+      <div class="form-input"><input type="number" value="19" id="age"></div>
+    </div>
+    <div class="form-group">
+      <div class="form-label">&#x1F3E0; 籍贯</div>
+      <div class="form-input"><input type="text" value="山东省聊城市东昌府区" id="hometown"></div>
+    </div>
+    <div class="form-group">
+      <div class="form-label">&#x1F4DE; 联系电话</div>
+      <div class="form-input"><input type="tel" value="18865566988" id="phone"></div>
+    </div>
+    <div class="form-group">
+      <div class="form-label">&#x1F4E7; 电子邮箱</div>
+      <div class="form-input"><input type="email" value="2764870741@qq.com" id="email"></div>
+    </div>
+    <div class="form-group">
+      <div class="form-label">&#x1F393; 学历</div>
+      <div class="form-input">
+        <select id="education">
+          <option value="高中">高中</option>
+          <option value="大专">大专</option>
+          <option value="本科" selected>本科</option>
+          <option value="硕士">硕士</option>
+          <option value="博士">博士</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-label">&#x2695; 健康状况</div>
+      <div class="form-input">
+        <select id="health">
+          <option value="良好">良好</option>
+          <option value="一般">一般</option>
+          <option value="较差">较差</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-label">&#x1F491; 婚姻状况</div>
+      <div class="form-input">
+        <select id="maritalStatus">
+          <option value="未婚">未婚</option>
+          <option value="已婚">已婚</option>
+          <option value="离异">离异</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-label">&#x1F917; 求职意向</div>
+      <div class="form-input">
+        <input list="job-intentions" value="前端开发工程师" id="jobIntention">
+        <datalist id="job-intentions">
+          <option value="前端开发工程师">
+          <option value="后端开发工程师">
+          <option value="测试工程师">
+        </datalist>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-label">&#x1F525; 专业</div>
+      <div class="form-input">
+        <select id="major">
+          <option value="软件工程">软件工程</option>
+          <option value="计算机科学与技术">计算机科学与技术</option>
+          <option value="网络工程">网络工程</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-label">&#x1F3EB; 毕业院校</div>
+      <div class="form-input">
+        <select id="province">
+          <option value="山东省">山东省</option>
+          <option value="北京市">北京市</option>
+        </select>
+        <select id="city">
+          <option value="烟台市">烟台市</option>
+          <option value="北京市">北京市</option>
+        </select>
+        <select id="school">
+          <option value="鲁东大学">鲁东大学</option>
+          <option value="北京大学">北京大学</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group checkbox-group">
+      <div class="form-label">&#x1F4DA; 技能证书</div>
+      <input type="checkbox" name="skillCert[]" id="cert1" checked> 互联网+
+      <input type="checkbox" name="skillCert[]" id="cert2" checked> 蓝桥杯
+      <input type="checkbox" name="skillCert[]" id="cert3"> 挑战者杯
+    </div>
+    <div class="form-group checkbox-group">
+      <div class="form-label">&#x1F3C3; 个人特长与爱好</div>
+      <input type="checkbox" name="hobby[]" id="hobby1" checked> 篮球
+      <input type="checkbox" name="hobby[]" id="hobby2" checked> 阅读
+      <input type="checkbox" name="hobby[]" id="hobby3" checked> 编程
+    </div>
+    <div class="form-group textarea">
+      <div class="form-label">&#x1F4DD; 项目经历</div>
+      <textarea id="projectExperience">暂无</textarea>
+    </div>
+    <div class="form-group textarea">
+      <div class="form-label">&#x1F4AC; 自我评价</div>
+      <textarea id="selfEvaluation">本人性格开朗，积极向上，具备较强的学习能力和适应能力。在过往的学习和实践经历中，不断培养自己的专业技能和综合素质。在专业知识方面，扎实掌握了 HTML、CSS、JavaScript 等前端开发技术，能够熟练运用 Vue.js 框架进行项目开发。在实践过程中，参与过公司内部管理系统前端开发项目，负责页面设计与交互实现，通过团队协作和个人努力，成功优化页面加载速度 30%，锻炼了自己的团队协作能力和解决问题的能力。同时，我也注重自身的兴趣培养，业余时间喜欢打篮球、阅读和编程，这不仅丰富了我的生活，也培养了我的耐心和专注力。我相信自己能够快速融入新的工作环境，以饱满的热情和认真负责的态度完成各项工作任务，为公司创造价值。</textarea>
+    </div>
+    <div class="form-group button-container">
+      <input type="submit" value="提交">
+      <input type="button" value="清除" id="clearButton">
+    </div>
+  </div>
+  <script>
+    const clearButton = document.getElementById('clearButton');
+    clearButton.addEventListener('click', function () {
+      document.getElementById('name').value = '';
+      document.getElementById('gender').selectedIndex = 0;
+      document.getElementById('age').value = '';
+      document.getElementById('hometown').value = '';
+      document.getElementById('phone').value = '';
+      document.getElementById('email').value = '';
+      document.getElementById('education').selectedIndex = 0;
+      document.getElementById('health').selectedIndex = 0;
+      document.getElementById('maritalStatus').selectedIndex = 0;
+      document.getElementById('jobIntention').value = '';
+      document.getElementById('major').selectedIndex = 0;
+      document.getElementById('province').selectedIndex = 0;
+      document.getElementById('city').selectedIndex = 0;
+      document.getElementById('school').selectedIndex = 0;
+      document.getElementById('cert1').checked = false;
+      document.getElementById('cert2').checked = false;
+      document.getElementById('cert3').checked = false;
+      document.getElementById('hobby1').checked = false;
+      document.getElementById('hobby2').checked = false;
+      document.getElementById('hobby3').checked = false;
+      document.getElementById('projectExperience').value = '';
+      document.getElementById('selfEvaluation').value = '';
+    });
+  </script>
+</body>
+
+</html>
+    

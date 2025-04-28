@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* 重置一些默认样式 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    #rotate {
+      width: 400px;
+      height: 400px;
+      margin: 50px auto;
+      perspective: 1000px;
+      position: relative;
+      border: 1px solid #ccc;
+      padding: 20px;
+      /* 添加俯视视角 */
+      transform: rotateX(15deg);
+    }
+
+   .photo {
+      list-style: none;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      position: relative;
+      /* 添加自动旋转动画 */
+      animation: rotateAnimation 10s linear infinite;
+    }
+
+    @keyframes rotateAnimation {
+      from {
+        transform: rotateY(0deg);
+      }
+      to {
+        transform: rotateY(360deg);
+      }
+    }
+
+   .photo li {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+   .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease; /* 添加过渡效果 */
+    }
+
+    /* 为每个图片设置不同的初始旋转角度，使其呈现环绕效果 */
+   .photo li:nth-child(1) {
+      transform: rotateY(0deg) translateZ(200px);
+    }
+
+   .photo li:nth-child(2) {
+      transform: rotateY(90deg) translateZ(200px);
+    }
+
+   .photo li:nth-child(3) {
+      transform: rotateY(180deg) translateZ(200px);
+    }
+
+   .photo li:nth-child(4) {
+      transform: rotateY(270deg) translateZ(200px);
+    }
+
+   .photo img:hover {
+      transform: scale(1.1); /* 鼠标悬停时缩放图片 */
+    }
+
+    h3 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  </style>
+  <title>旋转夏日主题背景</title>
+</head>
+
+<body>
+  <div id="rotate">
+    <ul class="photo">
+      <li><img src="20250410.jpg" alt="图片1"></li>
+      <li><img src="20250423.jpg" alt="图片2"></li>
+      <li><img src="v2-46fe45980c68467445d2f247922f50de_1440w.jpg" alt="图片3"></li>
+      <li><img src="v2-050e7736d8b95a22fc8bcf155af17e2d_1440w.jpg" alt="图片4"></li>
+    </ul>
+  </div>
+  <script>
+    const photo = document.querySelector('.photo');
+    const images = document.querySelectorAll('.photo img');
+
+    images.forEach(image => {
+      image.addEventListener('mouseenter', () => {
+        photo.style.animationPlayState = 'paused';
+      });
+      image.addEventListener('mouseleave', () => {
+        photo.style.animationPlayState = 'running';
+      });
+    });
+  </script>
+</body>
+
+</html>
+    
