@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>七彩霓虹灯</title>
+    <style>
+        .neon-light {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin: 10px;
+            display: inline-block;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        .control-buttons {
+            margin-top: 20px;
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="neon-container" class="flex justify-center items-center min-h-screen flex-col">
+        <div class="lights-container">
+            <div class="neon-light" id="light1"></div>
+            <div class="neon-light" id="light2"></div>
+            <div class="neon-light" id="light3"></div>
+            <div class="neon-light" id="light4"></div>
+            <div class="neon-light" id="light5"></div>
+            <div class="neon-light" id="light6"></div>
+            <div class="neon-light" id="light7"></div>
+        </div>
+        <div class="control-buttons">
+            <button id="startBtn">启动</button>
+            <button id="stopBtn" disabled>停止</button>
+        </div>
+    </div>
+    <script>
+        const lights = document.querySelectorAll('.neon-light');
+        const colors = ['red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'purple'];
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        let intervals = [];
+        let isRunning = false;
+
+        function startNeon() {
+            if (isRunning) return;
+            
+            lights.forEach((light, lightIndex) => {
+                light.style.backgroundColor = colors[lightIndex % colors.length];
+            });
+            
+            intervals = Array.from(lights).map((light, lightIndex) => {
+                let colorIndex = lightIndex;
+                
+                return setInterval(() => {
+                    colorIndex = (colorIndex + 1) % colors.length;
+                    light.style.backgroundColor = colors[colorIndex];
+                    light.style.boxShadow = `0 0 15px ${colors[colorIndex]}`;
+                }, 500);
+            });
+            
+            isRunning = true;
+            startBtn.disabled = true;
+            stopBtn.disabled = false;
+        }
+
+        function stopNeon() {
+            intervals.forEach(clearInterval);
+            intervals = [];
+            
+            lights.forEach(light => {
+                light.style.backgroundColor = '';
+                light.style.boxShadow = '';
+            });
+            
+            isRunning = false;
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+        }
+
+        startBtn.addEventListener('click', startNeon);
+        stopBtn.addEventListener('click', stopNeon);
+        window.addEventListener('beforeunload', stopNeon);
+    </script>
+</body>
+
+</html>
+       
