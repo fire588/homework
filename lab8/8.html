@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>班级随机点名系统</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4299e1',
+                        secondary: '#f7fafc',
+                        accent: '#48bb78',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .animate-pulse-custom {
+                animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            }
+            .student-item {
+                @apply px-4 py-2 rounded-lg text-center cursor-pointer transition-all duration-300 border border-gray-200;
+            }
+            .student-item:hover {
+                @apply bg-gray-100 -translate-y-1;
+            }
+            .student-item.selected {
+                @apply bg-primary text-white border-primary;
+            }
+            .history-item {
+                @apply bg-secondary text-gray-700 px-3 py-1 rounded-full text-sm border border-gray-200;
+            }
+        }
+
+        body {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(at 40% 20%, rgba(255, 203, 143, 0.1) 0px, transparent 50%),
+                radial-gradient(at 80% 0%, rgba(127, 255, 212, 0.1) 0px, transparent 50%),
+                radial-gradient(at 0% 50%, rgba(137, 207, 240, 0.1) 0px, transparent 50%);
+        }
+
+        #selectedStudent {
+            position: relative;
+            overflow: hidden;
+        }
+
+        #selectedStudent::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shine 2s infinite;
+        }
+
+        @keyframes shine {
+            100% {
+                left: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen font-sans">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <header class="text-center mb-8">
+            <h1 class="text-[clamp(2rem,5vw,3rem)] font-bold text-gray-800 mb-2">班级随机点名系统</h1>
+            <p class="text-gray-600 text-lg">软工2402
+        </header>
+        
+        <main class="bg-white rounded-xl shadow-lg p-6 mb-8 transform transition-all duration-300 hover:shadow-xl">
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">学生名单</h2>
+                <div id="studentList" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 max-h-60 overflow-y-auto p-2 border border-gray-200 rounded-lg">
+
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row gap-6 items-center justify-center mb-8">
+                <div id="selectedStudent" class="w-full md:w-1/2 h-32 flex items-center justify-center border-4 border-dashed border-gray-300 rounded-xl text-gray-500 text-2xl font-medium transition-all">
+                    等待选择...
+                </div>
+                
+                <div class="w-full md:w-1/2 flex flex-col items-center justify-center gap-4">
+                    <button id="startBtn" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50">
+                        <i class="fa fa-play mr-2"></i>开始点名
+                    </button>
+                    <button id="stopBtn" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50" disabled>
+                        <i class="fa fa-stop mr-2"></i>停止点名
+                    </button>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <h2 class="text-xl font-semibold text-gray-800 mb-3">历史记录</h2>
+                <div id="historyList" class="flex flex-wrap gap-2 justify-center max-h-32 overflow-y-auto p-2 border border-gray-200 rounded-lg">
+
+                </div>
+            </div>
+        </main>
+        
+        
+    </div>
+
+    <script>
+        const students = [
+                "房芮禾","刘百刚","邢嘉旺","王政皓","张智","何沛洋","刘峻泽",
+            	"毛诚一","王志甲","赵正阳","贾旭","刘志龙","孙健玮","许珈玮","祝祥和","靳思同","李万琪",
+            	"王宪斌","张连祥","段鹏松","李凤豪","李业勤","王子林","张淑恒","高俊腾","李嘉兴","李建宇",
+            	"刘一翔","张照毅","谷天乐","高鹿桐","孙若冰","王梦月","张艳可","张智","张璐璐","吕君蕊",
+            	"武启航","邹谦慧","董萌萌","李欣宇","孙子凌","张静","白林涵","陈昊妍"
+        ];
+
+        const studentListEl = document.getElementById('studentList');
+        const selectedStudentEl = document.getElementById('selectedStudent');
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const historyListEl = document.getElementById('historyList');
+
+        let isSelecting = false;
+        let intervalId = null;
+        let selectedHistory = [];
+
+        function initStudentList() {
+            students.forEach(student => {
+                const studentEl = document.createElement('div');
+                studentEl.className = 'student-item';
+                studentEl.textContent = student;
+                studentEl.dataset.name = student;
+                studentListEl.appendChild(studentEl);
+            });
+        }
+
+        function selectRandomStudent() {
+            const randomIndex = Math.floor(Math.random() * students.length);
+            return students[randomIndex];
+        }
+
+        function updateSelectedStudent(student) {
+            selectedStudentEl.textContent = student;
+            
+            document.querySelectorAll('.student-item').forEach(el => {
+                if (el.dataset.name === student) {
+                    el.classList.add('selected');
+                    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    el.classList.remove('selected');
+                }
+            });
+        }
+
+        function addToHistory(student) {
+            selectedHistory.unshift(student);
+            if (selectedHistory.length > 10) {
+                selectedHistory.pop();
+            }
+            updateHistoryList();
+        }
+
+        function updateHistoryList() {
+            historyListEl.innerHTML = '';
+            selectedHistory.forEach(student => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                historyItem.textContent = student;
+                historyListEl.appendChild(historyItem);
+            });
+        }
+
+        function startSelection() {
+            isSelecting = true;
+            startBtn.disabled = true;
+            stopBtn.disabled = false;
+            selectedStudentEl.classList.add('animate-pulse-custom');
+            
+            intervalId = setInterval(() => {
+                const randomStudent = selectRandomStudent();
+                updateSelectedStudent(randomStudent);
+            }, 100);
+        }
+
+        function stopSelection() {
+            if (!isSelecting) return;
+            
+            clearInterval(intervalId);
+            isSelecting = false;
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+            selectedStudentEl.classList.remove('animate-pulse-custom');
+            
+            addToHistory(selectedStudentEl.textContent);
+            
+            selectedStudentEl.classList.add('border-green-500');
+            selectedStudentEl.classList.add('bg-green-50');
+            setTimeout(() => {
+                selectedStudentEl.classList.remove('border-green-500');
+                selectedStudentEl.classList.remove('bg-green-50');
+            }, 1000);
+        }
+
+        startBtn.addEventListener('click', startSelection);
+        stopBtn.addEventListener('click', stopSelection);
+
+        initStudentList();
+    </script>
+</body>
+</html>
+    
